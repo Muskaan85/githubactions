@@ -1,0 +1,28 @@
+# name of the workflow that we see in github actions
+name: deploying-project
+
+# this workflow execute when some one runs code
+on: [push]
+
+# reside actual work, each job = one task , can have many jobs
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+      - uses: actions/checkout@v4
+      - name: Python CI
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Login to DockerHub
+        run: |
+             echo "${{ secrets.DOCKER_PWD}}" | docker login \
+              -u "${{ secrets.DOCKER_USERNAME }}" \
+              --password-stdin
+
+      - name: build docker image
+        run:  docker build -t muskaan85/deploying-project:1.0 .
+
+      - name: push to docker hub
+        run:  docker push muskaan85/deploying-project:1.0
+    
