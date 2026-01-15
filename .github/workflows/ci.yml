@@ -22,8 +22,8 @@ jobs:
                   --password-stdin
 
           - name: build docker image
-            run:  docker build -t muskaan85/deploying-project:1.0 .
+            run:  docker build -t muskaan85/deploying-project:latest .
 
           - name: push to docker hub
-            run:  docker push muskaan85/deploying-project:1.0
+            run:  docker push muskaan85/deploying-project:latest
       
